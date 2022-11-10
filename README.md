@@ -5,7 +5,7 @@ A plugin for working with [Aiken](https://github.com/txpipe/aiken) on Vim / NeoV
 ## Features
 
 - [x] Syntax Highlighting
-- [ ] (TODO) Automatic indentation
+- [x] Automatic indentation
 
 ## Installation
 
