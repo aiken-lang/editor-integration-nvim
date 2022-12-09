@@ -16,9 +16,13 @@ syn keyword aikenException assert, todo
 syn keyword aikenImport  use  nextgroup=aikenUseModPath  skipwhite skipempty
 syn keyword aikenKeyword type nextgroup=aikenTypeName skipwhite skipempty
 syn keyword aikenKeyword fn   nextgroup=aikenFuncName skipwhite skipempty
+syn keyword aikenKeyword test nextgroup=aikenTestName skipwhite skipempty
 
 " Functions
 syn match aikenFuncName contained "\l\w*"
+
+" Tests
+syn match aikenTestName contained "\l\w*"
 
 " Types
 syn match aikenTypeName "\<[A-Z][0-9A-Za-z_]*"
@@ -67,6 +71,7 @@ hi def link aikenException Special
 hi def link aikenImport Include
 hi def link aikenKeyword Keyword
 hi def link aikenFuncName Identifier
+hi def link aikenTestName Identifier
 hi def link aikenTypeName Type
 hi def link aikenModPath Function
 hi def link aikenUseModPath Function
