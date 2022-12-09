@@ -14,7 +14,7 @@ A plugin for working with [Aiken](https://github.com/txpipe/aiken) on Vim / NeoV
 Simply use:
 
 ```vim
-Plug 'CardanoSolutions/aiken-vim'
+Plug 'aiken-lang/editor-integration-nvim'
 ```
 
 ### Manual
