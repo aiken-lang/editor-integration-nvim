@@ -51,7 +51,7 @@ syn match aikenOperator "\(+\|-\|*\|%\)"
 
 " Literals
 " − Strings
-syn region aikenString start="\"" skip="\\\\." end="\"" contains=@spell
+syn region aikenString start="\"" skip="\\." end="\"" contains=@spell
 " − Numbers
 syn match aikenInt     "-\?\<\d\+\>"
 syn match aikenBinary  "\<0b[0-1_]\+\>"
