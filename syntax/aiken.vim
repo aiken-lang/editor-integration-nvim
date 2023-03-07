@@ -13,11 +13,11 @@ syn keyword aikenConditional if else when is
 syn keyword aikenKeyword let expect
 syn keyword aikenException error todo trace
 syn keyword aikenTopLevelDefinition const pub opaque
-syn keyword aikenTopLevelDefinition use       nextgroup=aikenModLastPath,aikenModPath skipwhite skipempty
-syn keyword aikenTopLevelDefinition type      nextgroup=aikenTypeName                 skipwhite skipempty
-syn keyword aikenTopLevelDefinition fn        nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
-syn keyword aikenTopLevelDefinition validator nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
-syn keyword aikenTopLevelDefinition test      nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
+syn keyword aikenTopLevelDefinition use            nextgroup=aikenModLastPath,aikenModPath skipwhite skipempty
+syn keyword aikenTopLevelDefinition type           nextgroup=aikenTypeName                 skipwhite skipempty
+syn keyword aikenTopLevelDefinition validator      nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
+syn keyword aikenTopLevelDefinition test           nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
+syn match   aikenTopLevelDefinition "fn[^(]"me=e-1 nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
 
 " Identifiers
 syn match aikenIdentifier         "\l\w*" contained
@@ -29,8 +29,9 @@ syn match  aikenTypeParameter "\l\w*" contained
 syn region aikenTypeArgs start="<" end=">" contains=aikenTypeName,aikenTypeParameter
 
 " Functions
-syn match aikenFuncCall "\l\w*(" contains=aikenFuncArgs
-syn region aikenFuncArgs start="(" end=")" contains=aikenString,aikenByteString,aikenHexString,aikenInt,aikenHex,aikenOperator,aikenConditional,aikenTypeName,aikenFuncCall
+syn match aikenFuncCall "\l\w*("me=e-1 contains=aikenFuncArgs
+syn region aikenFuncArgs start="("ms=s+1 end=")"me=e-1 contains=aikenString,aikenByteString,aikenHexString,aikenInt,aikenHex,aikenOperator,aikenConditional,aikenTypeName,aikenFuncCall
+syn match aikenKeyword "fn("me=e-1 skipwhite skipempty
 
 " Modules
 syn match aikenModPath     "\w\(\w\)*"                 contained nextgroup=aikenModPathSep
@@ -85,10 +86,10 @@ syn region myFold start="{" end="}" transparent fold
 hi def link aikenTopLevelDefinition Include
 hi def link aikenTopLevelIdentifier Identifier
 
+hi def link aikenFuncCall Identifier
+
 hi def link aikenConditional Keyword
 hi def link aikenKeyword Keyword
-
-hi def link aikenFuncCall Identifier
 
 hi def link aikenTypeName Type
 hi def link aikenTypeArgs None
