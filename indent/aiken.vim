@@ -22,7 +22,7 @@ endif
 function GetAikenIndent(lnum)
   setlocal cinkeys=0{,0}
 
-  let l:ind = cindent(a:lnum)
+  let l:ind = indent(a:lnum)
   let l:lline = getline(a:lnum - 1)
 
   if l:lline =~# '\(->\|=\)\s*$'
