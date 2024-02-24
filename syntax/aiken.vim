@@ -10,7 +10,7 @@ endif
 
 " Keywords
 syn keyword aikenConditional if else when is
-syn keyword aikenKeyword let expect as
+syn keyword aikenKeyword let expect as via
 syn keyword aikenException error todo trace
 syn keyword aikenTopLevelDefinition const pub opaque
 syn keyword aikenTopLevelDefinition use            nextgroup=aikenModLastPath,aikenModPath skipwhite skipempty
