@@ -17,6 +17,7 @@ syn keyword aikenTopLevelDefinition use            nextgroup=aikenModLastPath,ai
 syn keyword aikenTopLevelDefinition type           nextgroup=aikenTypeName                 skipwhite skipempty
 syn keyword aikenTopLevelDefinition validator      nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
 syn keyword aikenTopLevelDefinition test           nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
+syn keyword aikenTopLevelDefinition bench          nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
 syn match   aikenTopLevelDefinition "fn[^(]"me=e-1 nextgroup=aikenTopLevelIdentifier       skipwhite skipempty
 
 " Identifiers
