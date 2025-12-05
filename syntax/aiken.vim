@@ -176,3 +176,5 @@ setlocal foldmethod=expr
 setlocal foldexpr=AikenFoldExpr(v:lnum)
 setlocal foldtext=AikenFoldText()
 setlocal foldminlines=1
+setlocal foldlevel=99
+setlocal foldlevelstart=99

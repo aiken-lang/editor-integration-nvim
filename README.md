@@ -27,6 +27,26 @@ To enable fold regions, and in case your defaults are different from nvim's defa
 autocmd FileType aiken setlocal foldenable foldlevelstart=0
 ```
 
+To only fold when files are "long":
+
+```vim
+augroup AikenDynamicFolds
+  autocmd!
+  autocmd FileType aiken call s:AikenDynamicFoldSetup()
+augroup END
+
+function! s:AikenDynamicFoldSetup() abort
+  let nlines = line('$')
+  if nlines < 100
+    setlocal foldlevel=99
+    setlocal foldlevelstart=99
+  else
+    setlocal foldlevel=0
+    setlocal foldlevelstart=0
+  endif
+endfunction
+```
+
 ### Installation / [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 First add this to lazy.nvim setup:
@@ -53,8 +73,22 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.ak",
   callback = function()
     vim.lsp.buf.format({async = false})
+
     vim.opt_local.foldenable = true  -- Optional, to enable or disable fold regions.
     vim.opt_local.foldlevelstart = 0 -- Optional, start with all regions folded.
+
+    -- Or, to configure folding dynamically based on the file length
+    local buf = vim.api.nvim_get_current_buf()
+    local nlines = vim.api.nvim_buf_line_count(buf)
+    if nlines < 100 then
+      -- Small file: open all folds
+      vim.opt_local.foldlevel = 99
+      vim.opt_local.foldlevelstart = 99
+    else
+      -- Big file: start collapsed
+      vim.opt_local.foldlevel = 0
+      vim.opt_local.foldlevelstart = 0
+    end
   end
 })
 ```
