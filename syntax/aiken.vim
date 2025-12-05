@@ -91,7 +91,46 @@ syn match aikenBool "\(\<True\>\|\<False\>\)"
 syn match aikenBraces "[\.:{}(),]"
 
 " Fold regions
-syn region aikenFold start="{" end="}" fold transparent keepend
+function! AikenFoldExpr(lnum) abort
+  let line = getline(a:lnum)
+  let prev = a:lnum > 1 ? getline(a:lnum - 1) : ''
+
+  " 1. Function signature line: keep it at level 0 (never folded)
+  if line =~ '^\(fn\|pub fn\|test\|bench\)'
+    return 0
+  endif
+
+  " 2.1 First body line: the line *after* a fn-signature-with-{ at end
+  if prev =~ '^\(fn\|pub fn\|test\|bench\).*{\s*$'
+    " Start a fold at this body line
+    return 1
+  endif
+
+  " 2.2 First body line: for multiline function signatures
+  if prev =~ '^).*{\s*$'
+    " Start a fold at this body line
+    return 1
+  endif
+
+  " 3. Closing brace line: end the fold here (keep brace visible)
+  if line =~ '^}\s*$'
+    return 0
+  endif
+
+  " 4. Inside the body: inherit previous line's fold level
+  if a:lnum > 1
+    return '='
+  endif
+
+  " 5. Anything else: no fold
+  return 0
+endfunction
+
+function! AikenFoldText() abort
+  " Number of lines in this fold
+  let l:nlines = v:foldend - v:foldstart + 1
+  return printf('  //+ %d lines', l:nlines)
+endfunction
 
 " Highlights
 hi def link aikenTopLevelDefinition Include
@@ -129,6 +168,11 @@ hi def link aikenComment Comment
 
 hi def link aikenException Special
 
-syn sync fromstart
+hi! link Folded Comment
 
 let b:current_syntax = 'aiken'
+
+setlocal foldmethod=expr
+setlocal foldexpr=AikenFoldExpr(v:lnum)
+setlocal foldtext=AikenFoldText()
+setlocal foldminlines=1
